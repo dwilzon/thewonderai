@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/generate-text/route.js", "src/app/generate-text.js", "src/app/api/generate-text/generate-text.js"],
   "exclude": ["node_modules"]
 }
