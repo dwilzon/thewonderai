@@ -1,15 +1,65 @@
-import Image from 'next/image';
+'use client';
 
-export function Header() {
+import { useState } from 'react';
+import Image from 'next/image';
+import Head from 'next/head';
+
+// TextTool component
+function TextTool() {
+  const [prompt, setPrompt] = useState('');
+  const [result, setResult] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = async () => {
+    setLoading(true);
+    const res = await fetch('/api/generate-text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+    });
+    const data = await res.json();
+    setResult(data.result);
+    setLoading(false);
+  };
+
+  return (
+    <div className="max-w-xl mx-auto p-4 bg-gray-800 rounded">
+      <h2 className="text-2xl font-bold mb-4 text-white">AI Text Generator</h2>
+      <textarea
+        className="w-full p-2 border border-gray-400 rounded"
+        rows={4}
+        placeholder="Type your prompt..."
+        value={prompt}
+        onChange={(e) => setPrompt(e.target.value)}
+      />
+      <button
+        onClick={handleGenerate}
+        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        disabled={loading}
+      >
+        {loading ? 'Generating...' : 'Generate'}
+      </button>
+
+      {result && (
+        <div className="mt-6 bg-gray-900 text-white p-4 rounded shadow">
+          <h3 className="text-lg font-semibold mb-2">Result:</h3>
+          <p>{result}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Header component
+function Header() {
   return (
     <header className="p-4 flex items-center">
-      <h1 className="text-xl font-bold text-white"></h1>
+      <h1 className="text-xl font-bold text-white">TheWonderAI</h1>
     </header>
   );
 }
 
-import Head from 'next/head';
-
+// Main Home component
 export default function Home() {
   return (
     <>
@@ -23,76 +73,62 @@ export default function Home() {
 
         {/* Hero Section */}
         <section className="text-center py-20 px-6 bg-gradient-to-br from-purple-900 to-black">
-            <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <Image
               src="/logo.png"
               alt="TheWonderAI Logo"
               width={200}
               height={200}
               priority
-              className="mb-4 bg-transparent"
+              className="mb-4"
             />
             <h2 className="text-4xl md:text-6xl font-bold mb-4 text-purple-200">
               Discover the Wonder of AI
             </h2>
-            </div>
+          </div>
           <p className="text-lg text-gray-300 mb-6">
             Explore AI tools that spark creativity and supercharge productivity.
           </p>
           <div className="space-x-4">
-            <button className="bg-blue-500 px-6 py-3 rounded-xl text-white hover:bg-blue-600 transition">Try It Now</button>
-            <button className="border border-white px-6 py-3 rounded-xl hover:bg-white hover:text-black transition">Learn More</button>
+            <button className="bg-blue-500 px-6 py-3 rounded-xl text-white hover:bg-blue-600 transition">
+              Try It Now
+            </button>
+            <button className="border border-white px-6 py-3 rounded-xl hover:bg-white hover:text-black transition">
+              Learn More
+            </button>
           </div>
         </section>
 
-        {/* AI Tools */}
+        {/* AI Tools Section */}
         <section className="py-16 px-6">
-          <h3 className="text-3xl font-semibold text-center mb-8 text-purple-300">Featured AI Tools</h3>
+          <h3 className="text-3xl font-semibold text-center mb-8 text-purple-300">
+            Featured AI Tools
+          </h3>
           <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((tool) => (
-              <div key={tool} className="bg-gray-900 p-6 rounded-2xl shadow-lg text-center">
-                <h4 className="text-xl font-bold mb-2">AI Tool {tool}</h4>
-                <p className="text-gray-400 mb-4">This tool uses AI to generate awesome results.</p>
-                <button className="bg-purple-600 px-4 py-2 rounded-xl hover:bg-purple-700">Launch Tool</button>
-              </div>
-            ))}
+            {/* Example placeholder tool */}
+            <div className="bg-gray-900 p-6 rounded-2xl shadow-lg text-center">
+              <h4 className="text-xl font-bold mb-2">AI Tool 1</h4>
+              <p className="text-gray-400 mb-4">This tool uses AI to generate awesome results.</p>
+              <button className="bg-purple-600 px-4 py-2 rounded-xl hover:bg-purple-700">
+                Launch Tool
+              </button>
+            </div>
+            {/* Render the TextTool component as one of your AI Tools */}
+            <TextTool />
+            {/* Another placeholder tool */}
+            <div className="bg-gray-900 p-6 rounded-2xl shadow-lg text-center">
+              <h4 className="text-xl font-bold mb-2">AI Tool 3</h4>
+              <p className="text-gray-400 mb-4">This tool uses AI to generate awesome results.</p>
+              <button className="bg-purple-600 px-4 py-2 rounded-xl hover:bg-purple-700">
+                Launch Tool
+              </button>
+            </div>
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="py-16 px-6 bg-gray-950">
-          <h3 className="text-3xl font-semibold text-center mb-8 text-purple-300">How It Works</h3>
-          <ol className="max-w-2xl mx-auto text-center text-lg space-y-4 text-gray-300">
-            <li>1️⃣ Choose an AI tool</li>
-            <li>2️⃣ Generate creative results</li>
-            <li>3️⃣ Download or share instantly</li>
-          </ol>
-        </section>
+        {/* Other sections (How It Works, Blog Preview, Newsletter Signup, Footer) go here */}
+        {/* ... */}
 
-        {/* Blog Preview */}
-        <section className="py-16 px-6">
-          <h3 className="text-3xl font-semibold text-center mb-8 text-purple-300">From the Blog</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((post) => (
-              <div key={post} className="bg-gray-900 p-6 rounded-2xl">
-                <h4 className="text-xl font-bold mb-2">AI & Creativity #{post}</h4>
-                <p className="text-gray-400">Learn how AI is reshaping the way we create, write, and think.</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Newsletter Signup */}
-        <section className="py-16 px-6 bg-black text-center">
-          <h3 className="text-2xl font-bold mb-4 text-purple-200">Join Our AI Explorer List</h3>
-          <p className="text-gray-400 mb-6">Get the latest tools, tips, and insights delivered to your inbox.</p>
-          <form className="flex justify-center gap-4 max-w-lg mx-auto">
-            <input type="email" placeholder="Your email" className="p-3 rounded-lg w-full bg-gray-800 text-white border border-gray-700" />
-            <button type="submit" className="bg-blue-500 px-6 py-3 rounded-xl hover:bg-blue-600">Subscribe</button>
-          </form>
-        </section>
-
-        {/* Footer */}
         <footer className="text-center text-gray-500 py-8 text-sm">
           &copy; {new Date().getFullYear()} TheWonderAI. All rights reserved.
         </footer>
