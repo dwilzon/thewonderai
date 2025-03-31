@@ -1,3 +1,20 @@
+import Image from 'next/image';
+
+export default function Header() {
+  return (
+    <header className="p-4 flex items-center space-x-4">
+      <Image
+        src="/logo.png"
+        alt="TheWonderAI Logo"
+        width={150}
+        height={150}
+        priority
+      />
+      <h1 className="text-xl font-bold text-white">TheWonderAI</h1>
+    </header>
+  );
+}
+
 import Head from 'next/head';
 
 export default function Home() {
