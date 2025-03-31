@@ -1,16 +1,9 @@
 import Image from 'next/image';
 
-export default function Header() {
+export function Header() {
   return (
-    <header className="p-4 flex items-center space-x-4">
-      <Image
-        src="/logo.png"
-        alt="TheWonderAI Logo"
-        width={150}
-        height={150}
-        priority
-      />
-      <h1 className="text-xl font-bold text-white">TheWonderAI</h1>
+    <header className="p-4 flex items-center">
+      <h1 className="text-xl font-bold text-white"></h1>
     </header>
   );
 }
@@ -26,21 +19,23 @@ export default function Home() {
 
       <main className="bg-black text-white min-h-screen font-sans">
         {/* Header */}
-        <header className="flex justify-between items-center p-6">
-          <h1 className="text-2xl font-bold text-blue-400">TheWonderAI</h1>
-          <nav className="space-x-6">
-            <a href="#" className="hover:text-purple-300">Home</a>
-            <a href="#" className="hover:text-purple-300">Tools</a>
-            <a href="#" className="hover:text-purple-300">Blog</a>
-            <a href="#" className="hover:text-purple-300">About</a>
-          </nav>
-        </header>
+        <Header />
 
         {/* Hero Section */}
         <section className="text-center py-20 px-6 bg-gradient-to-br from-purple-900 to-black">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 text-purple-200">
-            Discover the Wonder of AI
-          </h2>
+            <div className="flex flex-col items-center">
+            <Image
+              src="/logo.png"
+              alt="TheWonderAI Logo"
+              width={200}
+              height={200}
+              priority
+              className="mb-4 bg-transparent"
+            />
+            <h2 className="text-4xl md:text-6xl font-bold mb-4 text-purple-200">
+              Discover the Wonder of AI
+            </h2>
+            </div>
           <p className="text-lg text-gray-300 mb-6">
             Explore AI tools that spark creativity and supercharge productivity.
           </p>
